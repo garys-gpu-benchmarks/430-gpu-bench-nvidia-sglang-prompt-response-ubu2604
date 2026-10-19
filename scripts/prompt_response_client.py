@@ -238,10 +238,10 @@ def main() -> int:
             row["radixattention_cache_hit_rate_pct"] = hit_rate if row["status"] == "ok" else NA_FAILED
         row.update(meta)
     fieldnames = ["request_id", "sample_index", "status", "input_tokens", "output_tokens", *METRIC_KEYS,
-                  "prompt_tokens", "cached_tokens", "error_message", *meta]
+                  "prompt_tokens", "cached_tokens", "server_identity", "error_message", *meta]
     csv_path = run_dir / "raw_results.csv"
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames, extrasaction="ignore")
+        writer = csv.DictWriter(handle, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
     csv_text = csv_path.read_text(encoding="utf-8")
